@@ -1,0 +1,33 @@
+{
+  "name": "burger",
+  "version": "1.0.0",
+  "description": "A restauarant app for eating burgers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathewhall100/burger.git"
+  },
+  "author": "mathew hall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mathewhall100/burger/issues"
+  },
+  "homepage": "https://github.com/mathewhall100/burger#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^2.3.10",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}

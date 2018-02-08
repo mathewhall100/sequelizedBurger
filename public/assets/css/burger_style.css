@@ -1,0 +1,55 @@
+
+body {
+    background-color: peru;
+}
+
+.container {
+    max-width: 1150px
+}
+
+.jumbo {
+    margin: 0;
+    padding: 0;
+}
+
+.jumbotron {
+    background-color: peru;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding : 5px;
+}
+
+.right {
+    float: right;
+    padding-top: 20px
+}
+
+.jumbotron img {
+    float: left;
+    height: 200px;
+}
+
+.clearfix::after {
+	content: “”;    
+	display: block;
+	clear: both;
+} 
+
+.add-box {
+    background-color: lightgrey;
+    height: 150px;
+    width: 600px;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+
+.label {
+    color: red;
+    font-size: 16px;
+}
+
+.eat-burger {
+    margin: 5px
+}
+

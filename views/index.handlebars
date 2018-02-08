@@ -1,0 +1,183 @@
+<div class="container">
+
+  <!-- Jumbotron Title -->
+  <div class="jumbotron jumbo clearfix">
+    <img src="/assets/images/hamburger.png" alt="Hamburger cartoon">
+    <h1 class="right text-center">Welcome to Eat_Da_Burger</h1>
+    <h3 class="text-center">"The new burger store in town."</h3>
+  </div>
+
+</div>
+
+<div class="container add-box">
+  <row class="row">
+    <div class="col-md-12">
+
+      <h2>Add a new burger to the menu</h2>
+
+      <form class="add-form">
+        <span class="form-group">
+          <label for="new">Burger name</label>
+          <input type="text" id="new" name="name">
+        </span>
+        <button type="submit" class="add-burger">Add Burger</button>
+      </form>
+
+    </div>
+  </row>
+</div>
+
+<div class="container">
+<row class="row">
+
+  <div class="col-md-1">
+  </div>
+
+  <div class="col-md-4">
+    <h1>Available burgers!</h1>
+
+    <table>
+      {{#each burgers}} {{#if this.devoured}} {{else}}
+      <tr>
+        <td>
+          <span class="label">{{this.burger_name}}</span>
+        </td>
+        
+        <td>
+          <button class="eat-burger" data-id="{{this.id}}">Eat Burger!</button>
+        </td>
+      </tr>
+      {{/if}} {{/each}}
+    </table>
+
+  </div>
+
+  <div class="col-md-2"></div>
+
+  <div class="col-md-4">
+    <h1>Eaten Burgers</h1>
+
+    <UL>
+      {{#each burgers}} {{#if this.devoured}}
+      <li>
+        <p>
+
+          <span class="label">{{this.burger_name}}</span>
+
+        </p>
+      </li>
+      {{else}} {{/if}} {{/each}}
+    </UL>
+
+  </div>
+
+  <div class="col-md-1">
+  </div>
+
+</row>
+</div>
+
+<div class="container">
+  <row class="row">
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-4">
+
+      <hr>
+      <h4>Delete a burger from the menu</h4>
+
+
+      <form class="delete-form">
+        <div class="form-group">
+          <label for="del">Burger name</label>
+          <input type="text" id="del" name="name">
+        </div>
+        <button type="submit" class="del-burger">Delete Burger</button>
+      </form>
+
+    </div>
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-4">
+      <hr>
+      <h4>Clear the empty plates and cook some more burgers!</h4>
+      <button class="reset-menu">Clear & Cook more</button>
+    </div>
+
+    <div class="col-md-1"></div>
+
+  </row>
+</div>
+
+
+
+<script>
+
+  $(function () {
+
+    $(".eat-burger").on("click", function (event) {
+      var id = $(this).data("id");
+
+      $.ajax("/api/burgers/" + id, {
+        type: "PUT"
+      }).then(
+        function (data) {
+          location.reload();
+        }
+        );
+
+    });
+
+    $(".reset-menu").on("click", function (event) {
+      $.ajax("/api/reset", {
+        type: "PUT"
+      }).then(
+        function (data) {
+          location.reload();
+        }
+        )
+    });
+
+    $(".add-form").on("submit", function (event) {
+      event.preventDefault();
+
+      var newBurger = {
+        name: $("#new").val().trim(),
+        devoured: 0
+      };
+
+      $.ajax("/api/add", {
+        type: "POST",
+        data: newBurger
+      }).then(
+        function () {
+          console.log("new burger created")
+          location.reload();
+        }
+        );
+    });
+
+    $(".delete-form").on("submit", function (event) {
+      event.preventDefault();
+
+      var delBurger = {
+        name: $("#del").val().trim()
+      }
+
+      alert(delBurger.name)
+      $.ajax("api/delete", {
+        type: "DELETE",
+        data: delBurger
+      }).then(
+        function () {
+          console.log("Burger deleted")
+          location.reload();
+        }
+        );
+    });
+
+  }); // end of onready function 
+
+</script>
