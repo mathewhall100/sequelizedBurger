@@ -1,18 +1,17 @@
-
-
 var express = require("express");
 var router = express.Router();
 
-// import the model burger.js to use for database interaction
+// require the models from index.js and  burger.js to use for database interaction
 
-var burger = require("../models/burger.js");
+var db = require("../models");
 
 // create routes with logic as required
 
-router.get("/", function(req, res) {
-    burger.all(function(data) {
+router.get("/", function (req, res) {
+    console.log("get api call made");
+    db.Burger.findAll({ order: [['burger_name', 'ASC']] }).then(function (dbBurger) {
         var hbsObj = {
-            burgers: data
+            burgers: dbBurger
         };
 
         console.log(hbsObj);
@@ -21,53 +20,84 @@ router.get("/", function(req, res) {
 
 });
 
-router.post("/api/add", function(req, res) {
 
-    burger.add(["burger_name", "devoured"], [req.body.name, req.body.devoured], function(result) {
-        // return id of new burger
-        res.json({id: result.insertId});  // assume insertId is a proprty of returned result
+router.post("/api/add", function (req, res) {
+    db.Burger.create({
+        burger_name: req.body.name,
+        devoured: req.body.devoured
+    }).then(function (dbBurger) {
+        // return id of new burger in dbBurger object
+        res.json(dbBurger);
     });
 });
 
-router.delete("/api/delete", function(req, res) {
 
-    burger.delete("burger_name", req.body.name, function(result) {
-        if (result.affectedRows === 0) {
-            // delete failed
-            return res.status(404).end();
+
+router.delete("/api/delete", function (req, res) {
+    db.Burger.destroy({
+        where: {
+            burger_name: req.body.name
         }
-        res.status(200).end();
+    }).then(function (dbBurger) {
+        res.json(dbBurger);
+
+        // what about catching failure as we did with the ORM calls
+        /*
+            if (result.affectedRows === 0) {
+                // delete failed
+                return res.status(404).end();
+            }
+            res.status(200).end();
+        */
     });
 
 });
 
-router.put("/api/burgers/:id", function(req, res) {
-    var condition = "id = " + req.params.id;
-    var change = "devoured = 1";
-
-    burger.update(change, condition, function(result) {
-        if (result.changedRows === 0) {
-            // no changes made
-            return res.status(404).end();  // may need to edit to retrun something more sensible
+router.put("/api/eat/:id", function (req, res) {
+    db.Burger.update({
+        devoured: 1
+    }, {
+        where: {
+            id: req.params.id
         }
-        res.status(200).end(); // may need to edit to retrun something more sensible
+    }).then(function (dbBurger) {
+
+        res.json(dbBurger);
+
+        // what about catching failure as we did with the ORM calls
+        /*
+            if (result.changedRows === 0) {
+                // no changes made
+                return res.status(404).end();  // may need to edit to retrun something more sensible
+            }
+            res.status(200).end(); // may need to edit to retrun something more sensible
+        */
     });
 });
 
-router.put("/api/reset", function(req,res) {
-    burger.reset(function(result) {
-        if (result.changedRows === 0) {
-        // no changes made
-        return res.status(404).end();  // may need to edit to retrun something more sensible
-    }
-    res.status(200).end(); // may need to edit to retrun something more sensible
+router.put("/api/clear", function (req, res) {
+    db.Burger.update({
+        devoured: 0
+    }, {
+        where: {}
+    }).then(function (dbBurger) {
 
+        res.json(dbBurger);
+
+        // what about catching failure as we did with the ORM calls
+        /*
+            if (result.changedRows === 0) {
+                // no changes made
+                return res.status(404).end(); // may need to edit to retrun something more sensible
+            }
+            res.status(200).end(); // may need to edit to retrun something more sensible
+        */
     });
 
 });
-
 
 
 
 // export routes for use in server.js
+
 module.exports = router;

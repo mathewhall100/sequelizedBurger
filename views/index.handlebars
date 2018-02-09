@@ -42,9 +42,15 @@
         <td>
           <span class="label">{{this.burger_name}}</span>
         </td>
-        
         <td>
+          <!--  drop down list of customer names 
+                willl need to be got with initial api call along with burgers and presented here with handlebars
+          -->
+        </td>
+        <td>
+          <
           <button class="eat-burger" data-id="{{this.id}}">Eat Burger!</button>
+          
         </td>
       </tr>
       {{/if}} {{/each}}
@@ -120,7 +126,7 @@
     $(".eat-burger").on("click", function (event) {
       var id = $(this).data("id");
 
-      $.ajax("/api/burgers/" + id, {
+      $.ajax("/api/eat/" + id, {
         type: "PUT"
       }).then(
         function (data) {
@@ -131,7 +137,7 @@
     });
 
     $(".reset-menu").on("click", function (event) {
-      $.ajax("/api/reset", {
+      $.ajax("/api/clear", {
         type: "PUT"
       }).then(
         function (data) {
@@ -166,7 +172,6 @@
         name: $("#del").val().trim()
       }
 
-      alert(delBurger.name)
       $.ajax("api/delete", {
         type: "DELETE",
         data: delBurger

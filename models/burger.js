@@ -1,56 +1,35 @@
+// define sequelize object 'burger'
 
-// import ORM to interact with database
+module.exports = function (sequelize, DataTypes) {
+    var Burger = sequelize.define("Burger", {
+            burger_name: {
 
-var orm = require("../config/orm.js");
+                type: DataTypes.STRING,
+                allowNull: false,
 
-// Create a burger object 
+            },
 
-var burger = {
+            devoured: {
 
-    // select all the burgers in burgers table
-    all: function(callback) {
-        orm.selectAll("burgers", function(res) {
-            callback(res);
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            }
+        },
+
+        {
+            timestamps: false
         });
-    },
 
-    // select a specific burger
-    one: function(value, callback) {
-        orm.selectBurger("burgers", "id", value, function(res) {
-            callback(res);
-        });
-    },
+        Burger.associate = function(models) {
+            // if eaten each Burger may have a customer
+            // foreign key may be null as a burger may not have a customer if not yet eaten!
+            Burger.belongsTo(models.Customer, {
+              foreignKey: {
+                allowNull: true,
+              }
+            });
+          };
 
-    // add a new burger to the database
-    add: function(cols, values, callback) {
-        orm.addBurger("burgers", cols, values, function(res) {
-            callback(res);
-        });
-    },
+    return Burger;
 
-    // delete a burger from the menu
-    delete: function(col, value, callback) {
-        orm.deleteBurger("burgers", col, value, function(res) {
-            callback(res);
-        });
-    },
-
-    // update a burger on the database
-    update: function(change, condition, callback) {
-        orm.updateBurger("burgers", change, condition, function(res) {
-            callback(res);
-        });
-    },
-
-    // return all burgers to the menu
-    reset: function(callback) {
-        orm.resetAll("burgers", function(res) {
-            callback(res);
-        });
-    }
-
-}; // end of burger object
-
-
-// export burger object fo ruse in the controller file
-module.exports = burger;
+};
