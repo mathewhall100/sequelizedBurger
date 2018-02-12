@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
     var Customer = sequelize.define("Customer", {
       // Customer has a name 
-      name: {
+      customer_name: {
           type: DataTypes.STRING,
           allowNull: false
       }
