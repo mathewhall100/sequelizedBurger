@@ -8,8 +8,6 @@ $(".eat-burger").on("click", function (event) {
   var id = $(this).data("id");
   var custId = $("#customer option:selected").attr('data-id');
 
-  alert("burger di: " + id + "::::customer id: " + custId);
-
   if (custId > 0) {
 
     var existingCustomer = {
