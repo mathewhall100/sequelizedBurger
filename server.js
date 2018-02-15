@@ -6,7 +6,7 @@ var methovr = require("method-override");
 
 // Set uo express
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3060;
 var app = express();
 
 // require sequelize models for syncing

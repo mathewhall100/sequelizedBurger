@@ -44,12 +44,52 @@ body {
     border-radius: 8px;
 }
 
-.redtext {
+.redtext1 {
     color: red;
-    font-size: 16px;
+    font-size: 20px;
+}
+
+.to-text {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 5px 0 15px;
+}
+
+.customer-select {
+    width: 200px;
+    height: 28px;
+    margin-top: 12px
+}
+
+.customer-option {
+    padding: 5px;
 }
 
 .eat-burger {
-    margin: 5px
+    width: 100px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.eat-burger:hover {
+    font-weight: bold;
+    
+}
+
+.redtext2 {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.eaten-text1 {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 6px 0 24px
+
+}
+.eaten-text2 {
+    font-size: 16px;
+    font-weight: bold;
 }
 

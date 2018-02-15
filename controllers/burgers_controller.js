@@ -73,16 +73,13 @@ router.delete("/api/delete", function (req, res) {
             burger_name: req.body.name
         }
     }).then(function (burger) {
-        res.json(burger);
 
-        // what about catching failure as we did with the ORM calls
-        /*
-            if (result.affectedRows === 0) {
-                // delete failed
-                return res.status(404).end();
-            }
-            res.status(200).end();
-        */
+        res.json(burger);
+    })
+    
+    .catch(function (err) {
+        console.log("error deleting burger: " + err);
+        res.status(400);
     });
 
 });
@@ -114,18 +111,15 @@ router.put("/api/clear", function (req, res) {
         devoured: 0
     }, {
         where: {}
-    }).then(function (dbBurger) {
+    }).then(function (burger) {
 
-        res.json(dbBurger);
+        res.json(burger);
 
-        // what about catching failure as we did with the ORM calls
-        /*
-            if (result.changedRows === 0) {
-                // no changes made
-                return res.status(404).end(); // may need to edit to retrun something more sensible
-            }
-            res.status(200).end(); // may need to edit to retrun something more sensible
-        */
+    })
+    
+    .catch(function (err) {
+        console.log("error clearing plates burger: " + err);
+        res.status(400);
     });
 
 });

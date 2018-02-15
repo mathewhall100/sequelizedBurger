@@ -8,15 +8,17 @@ $(".eat-burger").on("click", function (event) {
   var id = $(this).data("id");
   var custId = $("#customer option:selected").attr('data-id');
 
+  alert("burger di: " + id + "::::customer id: " + custId);
+
   if (custId > 0) {
 
-    var customer = {
+    var existingCustomer = {
       customerId: custId
     };
 
     $.ajax("/api/eat/" + id, {
       type: "PUT",
-      data: customer
+      data: existingCustomer
     }).then(
       function (data) {
         location.reload();
@@ -72,52 +74,32 @@ $(".eat-burger").on("click", function (event) {
       var newCust = $('#new-customer-name').val().trim();
 
       newCustomer = {
-         name: newCust
-       };
+        name: newCust
+      };
 
       $.ajax("/api/new", {
         type: "POST",
         data: newCustomer
       }).then(
+        function (customer) {
 
-        function () {
+          latestCustomer = {
+            customerId: customer.id
+          };
 
-          var title = 'Eat_Da_burger';
-          var header = "Welcome";
-          var content = "Thank you for joining our restaurant. You can now select your name from the drop down list and finally eat the burger of your choice!";
+          $.ajax("/api/eat/" + id, {
+            type: "PUT",
+            data: latestCustomer,
+          }).then(
+            function (data) {
+              location.reload();
+            });
 
-          var html = '<div id="dynamicModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true">';
-          html += '<div class="modal-dialog">';
-          html += '<div class="modal-content">';
-          html += '<div class="modal-header">';
-          html += '<a class="close" data-dismiss="modal">×</a>';
-          html += '<h4>' + title + '</h4>'; //  modal title here
-          html += '</div>';
-          html += '<div class="modal-body">';
-          html += header + '<br /><br />'; //   modal heading text here
-          html += content + '<br />'; //   modal form details here
-          html += '</div>';
-          html += '<div class="modal-footer">';
-          html += '<button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close-submit2">Close</button>';
-          html += '</div>'; // footer
-          html += '</div>'; // content
-          html += '</div>'; // header
-          html += '</div>'; // modalWindow
 
-          $('body').append(html);
-          $("#dynamicModal2").modal();
-          $("#dynamicModal2").modal('show');
+        });
 
-          $('#dynamicModal2').on('hidden.bs.modal', function (e) {
-            $(this).remove();
-            location.reload();
-          });
 
-          $("#modal-close-submit2").on('click', function (event) {
-          location.reload();
-          });
-        }
-      );
+
     });
 
   }
@@ -178,3 +160,40 @@ $(".delete-form").on("submit", function (event) {
 });
 
 // ---------- Functions ----------------------
+
+// console.log(cust);
+// latestCustomerId = cust.id;
+// console.log(cust.id);
+
+// var title = 'Eat_Da_burger';
+// var header = "Welcome";
+// var content = "Thank you for joining our restaurant. You can now select your name from the drop down list and finally eat the burger of your choice!";
+
+// var html = '<div id="dynamicModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirm-modal" aria-hidden="true">';
+// html += '<div class="modal-dialog">';
+// html += '<div class="modal-content">';
+// html += '<div class="modal-header">';
+// html += '<a class="close" data-dismiss="modal">×</a>';
+// html += '<h4>' + title + '</h4>'; //  modal title here
+// html += '</div>';
+// html += '<div class="modal-body">';
+// html += header + '<br /><br />'; //   modal heading text here
+// html += content + '<br />'; //   modal form details here
+// html += '</div>';
+// html += '<div class="modal-footer">';
+// html += '<button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close-submit2">Close</button>';
+// html += '</div>'; // footer
+// html += '</div>'; // content
+// html += '</div>'; // header
+// html += '</div>'; // modalWindow
+
+// $('body').append(html);
+// $("#dynamicModal2").modal();
+// $("#dynamicModal2").modal('show');
+
+// $('#dynamicModal2').on('hidden.bs.modal', function (e) {
+//   $(this).remove();
+// });
+
+// $("#modal-close-submit2").on('click', function (event) {
+// });

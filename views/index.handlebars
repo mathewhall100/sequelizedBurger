@@ -6,7 +6,7 @@
   <div class="jumbotron jumbo clearfix">
     <img src="/assets/images/hamburger.png" alt="Hamburger cartoon">
     <h1 class="right text-center">Welcome to Eat_Da_Burger</h1>
-    <h3 class="text-center">"The new burger store in town."</h3>
+    <h3 class="text-center">"The sequelized version of the newest burger joint in town!"</h3>
   </div>
 
 </div>
@@ -36,7 +36,9 @@
 <div class="container">
   <row class="row">
 
-    <div class="col-md-6">
+
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
       <h1>Available burgers!</h1>
 
       <table>
@@ -44,24 +46,26 @@
         {{#each burgers}} {{#if this.devoured}} {{else}}
         <tr>
           <td>
-            <span class="label redtext">{{this.burger_name}}</span>
+            <span class="label redtext1">{{this.burger_name}}</span>
           </td>
 
           <td>
 
             <div class="form-group form-inline">
-              <label for="customer" class="control-label">Customer : </label>
+              <label for="customer" class="control-label"></label>
 
-              <select class="form-control" style="width: 200px" id="customer">
-                <option data-id="-1">New customer</option>
+              <select class="form-control customer-select" id="customer">
+                <option hidden>Select customer</option>
+                <option class="customer-option" data-id="-1">New customer</option>
                 {{#each ../customers}}
-                <option data-id="{{this.id}}">{{customer_name}}</option>
+                <option class="customer-option" data-id="{{this.id}}">{{customer_name}}{{this.id}}</option>
                 {{/each}}
               </select>
             </div>
           </td>
 
           <td>
+            <span class="to-text">to</span>
             <button class="eat-burger" data-id="{{this.id}}">Eat Burger!</button>
           </td>
         </tr>
@@ -69,13 +73,14 @@
         {{/if}} {{/each}}
       </table>
 
+
     </div>
 
-    <div class="col-md-1"></div>
 
     {{!-- Display eaten burgers --}}
 
-    <div class="col-md-5">
+
+    <div class="col-md-4">
       <h1>Eaten Burgers</h1>
 
       <table>
@@ -83,11 +88,12 @@
         {{#eatens}} {{#if this.devoured}}
 
         <tr>
-          <td class="redtext">
+          <td class="redtext2">
             {{this.burger_name}}
           </td>
           <td>
-            &nbsp eaten by: &nbsp {{this.Customer.customer_name}}
+            <span class="eaten-text1"> eaten by:</span>
+            <span class="eaten-text2">{{this.Customer.customer_name}}{{customer_id}}</span>
           </td>
 
           {{else}} {{/if}} {{/eatens}}
@@ -104,7 +110,7 @@
 
     <div class="col-md-1"></div>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
 
       {{!-- delete a burger option below burger menu --}}
 
@@ -132,12 +138,9 @@
       <button class="reset-menu">Clear & Cook more</button>
     </div>
 
-    <div class="col-md-1"></div>
-
   </row>
 </div>
 
 {{!-- link to include javascript file containing form logic and api calls --}}
 
 <script src="/assets/javascript/app.js"></script>
-
