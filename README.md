@@ -2,7 +2,7 @@
 ## Week 16 Homework - Full stack app with mysql & sequelize
 .
 
-View project on heroku at https://boiling-caverns-12450.herokuapp.com/
+View project on heroku at https://salty-temple-69409.herokuapp.com/
 .    
 .    
 
